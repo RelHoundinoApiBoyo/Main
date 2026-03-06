@@ -16,6 +16,14 @@
             --plyr-color-main: var(--accent-color);
         }
 
+        /* UI Protection: Prevent text selection and highlighting */
+        * {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -72,7 +80,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <nav>
         <button class="nav-btn" onclick="switchTab('concept')" data-lang="nav_concept">Concept Art</button>
@@ -136,6 +144,49 @@
 
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
     <script>
+        /* ==========================================
+           1. SECURITY & ANTI-INSPECT LOGIC
+        ========================================== */
+        
+        // Block Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Block Shortcuts (F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === "F12" || 
+                (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C" || e.key === "K")) ||
+                (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "s" || e.key === "S"))
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Anti-DevTools Viewport Detection
+        setInterval(() => {
+            const threshold = 160;
+            if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+                document.body.innerHTML = "Access Denied: Please close Developer Tools to view this page.";
+                location.reload();
+            }
+        }, 1000);
+
+        // Debugger Interference (Pauses execution if console is open)
+        (function() {
+            const block = function() {
+                setInterval(function() {
+                    debugger;
+                }, 50);
+            };
+            try { block(); } catch (err) {}
+        })();
+
+
+        /* ==========================================
+           2. EXISTING FUNCTIONALITY
+        ========================================== */
+
         let visitorData = { country: "Unknown", flag: "❓", device: "Desktop", os: "Unknown OS" };
 
         const player = new Plyr('#player', {
