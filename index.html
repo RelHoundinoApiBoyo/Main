@@ -136,12 +136,61 @@
 
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
     <script>
-        
-        (function(_0x326ac3,_0x38b2ed){function _0x48fcc7(_0x98333d,_0xd5914d,_0x1a9790,_0x1318c0,_0x5652e9){return _0x2294(_0xd5914d- -0x29b,_0x5652e9);}const _0x3fcf60=_0x326ac3(); /* ... Obfuscated Logic ... */ })();
-        
-        
-        const player = new Plyr('#player', { controls: ['play-large', 'play', 'progress', 'mute', 'volume', 'fullscreen'] });
-        
+        let visitorData = { country: "Unknown", flag: "❓", device: "Desktop", os: "Unknown OS" };
+
+        const player = new Plyr('#player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            quality: { default: 1080, options: [1080, 720, 480] }
+        });
+
+        async function getVisitorInfo() {
+            try {
+                const geoRes = await fetch('https://ipapi.co/json/');
+                const geoData = await geoRes.json();
+                visitorData.country = geoData.country_name || "Unknown";
+                visitorData.flag = geoData.country_code ? `:flag_${geoData.country_code.toLowerCase()}:` : "❓";
+                const ua = navigator.userAgent;
+                if (/tablet|ipad|playbook|silk/i.test(ua)) visitorData.device = "Tablet";
+                else if (/Mobile|Android|iP(hone|od)/i.test(ua)) visitorData.device = "Mobile";
+                if (ua.indexOf("Win") !== -1) visitorData.os = "Windows";
+                else if (ua.indexOf("Mac") !== -1) visitorData.os = "MacOS";
+                else if (ua.indexOf("Android") !== -1) visitorData.os = "Android";
+                else if (ua.indexOf("like Mac") !== -1) visitorData.os = "iOS";
+                else if (ua.indexOf("Linux") !== -1) visitorData.os = "Linux";
+            } catch (e) { console.log("Analytics limited."); }
+        }
+
+        async function sendToDiscord(title, description, color) {
+            const proxyURL = "/api/send-log";
+            fetch(proxyURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: title,
+                        description: description,
+                        color: color,
+                        fields: [
+                            { name: "Location", value: `${visitorData.flag} ${visitorData.country}`, inline: true },
+                            { name: "Device", value: `📱 ${visitorData.device}`, inline: true },
+                            { name: "OS", value: `💻 ${visitorData.os}`, inline: true }
+                        ],
+                        timestamp: new Date().toISOString(),
+                        footer: { text: "Monitoring System" }
+                    }]
+                })
+            }).catch(e => console.log("Log stored."));
+        }
+
+        window.onload = async () => {
+            await getVisitorInfo();
+            sendToDiscord("🚀 Archives Accessed", "A new user is viewing the landing page.", 5191563);
+        };
+
+        function trackStudioClick() {
+            sendToDiscord("🚪 Studio Access Initialized", "The user clicked 'ENTER STUDIO'.", 3066993);
+        }
+
         function switchTab(t){
             document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
             const buttons=Array.from(document.querySelectorAll('.nav-btn'));
@@ -149,16 +198,25 @@
             if(targetBtn)targetBtn.classList.add('active');
             document.querySelectorAll('.content-tab').forEach(tab=>tab.classList.remove('active'));
             const activeTab=document.getElementById('tab-'+t);
-            if(activeTab){activeTab.classList.add('active');}
+            if(activeTab){
+                activeTab.classList.add('active');
+                activeTab.style.animation='none';
+                activeTab.offsetHeight;
+                activeTab.style.animation='fadeIn 0.5s ease';
+            }
         }
+
+        const translations={
+            en:{nav_concept:"Concept Art",nav_socials:"Socials",nav_episodes:"Episodes",nav_models:"3D Models",nav_music:"Music",title_episodes:"Uhh have this video for now (go to 1:24 hehe)",desc_episodes:"Freddy fazbear dancing haha",title_concept:"Concept Art of Characters",card_wigy:"Wigy sheet",card_wigy_adv:"Wigy advanced sheet",card_atlas:"Atlas",card_atlas_adv:"Atlas advanced sheet",title_socials:"Links for my socials",title_models:"Interactive 3D Viewer",desc_models:"For now I only have A.P.I",btn_studio:"ENTER A.P.I STUDIO",title_music:"Music",desc_music:"[SoundCloud / Spotify I will put here soon...]"},
+            pt:{nav_concept:"Arte Conceitual",nav_socials:"Redes Sociais",nav_episodes:"Episódios",nav_models:"Modelos 3D",nav_music:"Música",title_episodes:"Uhh fica com esse vídeo por enquanto (vai pro 1:24 hehe)",desc_episodes:"Freddy fazbear dançando haha",title_concept:"Arte Conceitual dos Personagens",card_wigy:"Ficha do Wigy",card_wigy_adv:"Ficha avançada do Wigy",card_atlas:"Atlas",card_atlas_adv:"Ficha avançada do Atlas",title_socials:"Links das minhas redes",title_models:"Visualizador 3D Interativo",desc_models:"Por enquanto só tenho o A.P.I",btn_studio:"ENTRAR NO ESTÚDIO A.P.I",title_music:"Música",desc_music:"[Vou colocar SoundCloud / Spotify aqui em breve...]"}
+        };
 
         function setLanguage(l){
-            /* I see you */
-            const t={en:{nav_concept:"Concept Art",nav_episodes:"Episodes",title_episodes:"Uhh have this video for now",desc_episodes:"Freddy dancing"},pt:{nav_concept:"Arte Conceitual",nav_episodes:"Episódios",title_episodes:"Uhh fica com esse vídeo",desc_episodes:"Freddy dançando"}};
-            document.querySelectorAll('[data-lang]').forEach(el=>{const k=el.getAttribute('data-lang');if(t[l]&&t[l][k])el.innerText=t[l][k];});
+            document.querySelectorAll('[data-lang]').forEach(el=>{
+                const k=el.getAttribute('data-lang');
+                if(translations[l]&&translations[l][k])el.innerText=translations[l][k];
+            });
         }
-
-        function trackStudioClick() { console.log("Tracking access..."); }
     </script>
 </body>
 </html>
