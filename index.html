@@ -1,222 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>| PZ Palace |</title>
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <style>
-        :root {
-            --bg-color: #0b0b0b;
-            --panel-bg: #13131b;
-            --accent-color: #4f378b;
-            --glow-color: #6750a4;
-            --text-color: #e6e1e5;
-            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --plyr-color-main: var(--accent-color);
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column;
-            align-items: center; min-height: 100vh;
-        }
-
-        nav { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; justify-content: center; padding: 0 20px; }
-        .nav-btn {
-            background: transparent; border: 2px solid var(--accent-color); color: white;
-            padding: 12px 30px; border-radius: 8px; font-size: 1.1rem; font-weight: 600;
-            cursor: pointer; transition: 0.3s; text-transform: capitalize;
-            min-width: 140px; text-align: center; box-shadow: 0 0 5px rgba(79, 55, 139, 0.2);
-        }
-        .nav-btn:hover { background: rgba(79, 55, 139, 0.2); box-shadow: 0 0 15px var(--glow-color); transform: translateY(-2px); }
-        .nav-btn.active { background: var(--accent-color); box-shadow: 0 0 20px var(--accent-color); border-color: #d0bcff; }
-
-        #main-container { width: 90%; max-width: 1200px; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; font-weight: 600; text-align: center; }
-
-        .video-container {
-            width: 100%; max-width: 900px; 
-            border: 3px solid #1a1a1a;
-            border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            background: #000;
-        }
-
-        .content-tab { display: none; width: 100%; text-align: center; animation: fadeIn 0.5s ease; }
-        .content-tab.active { display: flex; flex-direction: column; align-items: center; }
-        .grid-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; margin-top: 20px; }
-        .placeholder-card { background: var(--panel-bg); height: 200px; border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #555; transition: 0.3s; }
-        .placeholder-card:hover { border-color: var(--accent-color); color: var(--accent-color); }
-        
-        .studio-link-btn { 
-            background: linear-gradient(45deg, var(--accent-color), var(--glow-color)); 
-            border: none; padding: 20px 50px; font-size: 1.5rem; color: white; 
-            border-radius: 50px; cursor: pointer; margin-top: 50px; 
-            text-decoration: none; box-shadow: 0 0 30px rgba(79, 55, 139, 0.4); 
-            transition: 0.3s; display: inline-block;
-        }
-        .studio-link-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(79, 55, 139, 0.8); }
-
-        .lang-container { position: fixed; bottom: 30px; left: 30px; z-index: 2000; }
-        .lang-icon { width: 50px; height: 50px; background: rgba(19, 19, 27, 0.8); backdrop-filter: blur(5px); border: 2px solid var(--accent-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
-        .lang-icon svg { width: 24px; height: 24px; fill: #d0bcff; }
-        .lang-menu { position: absolute; bottom: 70px; left: 0; width: 180px; background: rgba(19, 19, 27, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--accent-color); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 5px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; }
-        .lang-container:hover .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-btn { background: transparent; border: none; color: #aaa; padding: 10px; text-align: left; cursor: pointer; border-radius: 6px; font-weight: 500; font-family: inherit; }
-        .lang-btn:hover { background: rgba(79, 55, 139, 0.3); color: white; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Log Viewer</title>
+<style>
+  body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
+  .navbar {background: #333; color: #fff; padding: 10px;}
+  .navbar a {color: #fff; margin-right: 10px; text-decoration: none;}
+  .container {padding: 20px;}
+  .log-entry {background: #f9f9f9; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd;}
+  .log-entry:hover {background: #fff;}
+  /* Block text selection – optional; may affect UX */
+  /* * {user-select: none;} */
+</style>
 </head>
-<body>
+<body oncontextmenu="return false;">
+  <div class="navbar">
+    <a href="#" id="home-link">Home</a>
+    <a href="#" id="logs-link">Logs</a>
+  </div>
+  <div class="container" id="log-container"></div>
 
-    <nav>
-        <button class="nav-btn" onclick="switchTab('concept')" data-lang="nav_concept">Concept Art</button>
-        <button class="nav-btn" onclick="switchTab('socials')" data-lang="nav_socials">Socials</button>
-        <button class="nav-btn active" onclick="switchTab('episodes')" data-lang="nav_episodes">Episodes</button>
-        <button class="nav-btn" onclick="switchTab('models')" data-lang="nav_models">3D Models</button>
-        <button class="nav-btn" onclick="switchTab('music')" data-lang="nav_music">Music</button>
-    </nav>
+  <script>
+    /* =========================
+       1️⃣  Global UI protection
+       ========================= */
+    // Block right‑click everywhere
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
 
-    <div id="main-container">
-        <div id="tab-episodes" class="content-tab active">
-            <div class="section-title" data-lang="title_episodes">Uhh have this video for now (go to 1:24 hehe)</div>
-            <div class="video-container">
-                <video id="player" playsinline controls data-poster="https://archive.org/download/FREDDYDANCE/FREDDYDANCE.jpg">
-                    <source src="https://archive.org/download/FREDDYDANCE/FREDDYDANCE.mp4" type="video/mp4" />
-                </video>
-            </div>
-            <p style="color: #888; margin-top: 20px; max-width: 600px; line-height: 1.5;" data-lang="desc_episodes">Freddy fazbear dancing haha</p>
-        </div>
+    // Block common key‑combos that open DevTools
+    function blockInspectKeys(e) {
+      const key = e.key || e.keyCode;
+      // F12
+      if (key === 'F12' || key === 123) {
+        e.preventDefault();
+        alert('Right‑click and DevTools are disabled on this page.');
+        return;
+      }
+      // Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J, Ctrl+Shift+K, Ctrl+I
+      if (
+        (e.ctrlKey && e.shiftKey && (key === 'I' || key === 'C' || key === 'J' || key === 'K')) ||
+        (e.ctrlKey && key === 'I')
+      ) {
+        e.preventDefault();
+        alert('Right‑click and DevTools are disabled on this page.');
+        return;
+      }
+    }
+    document.addEventListener('keydown', blockInspectKeys);
 
-        <div id="tab-models" class="content-tab">
-            <div class="section-title" data-lang="title_models">Interactive 3D Viewer</div>
-            <p data-lang="desc_models">For now I only have A.P.I</p>
-            <a href="https://a-p-i-studio.vercel.app/" class="studio-link-btn" onclick="trackStudioClick()" data-lang="btn_studio">ENTER A.P.I STUDIO</a>
-        </div>
+    /* =========================
+       2️⃣  DevTools detection
+       ========================= */
+    function detectDevTools() {
+      const threshold = 160; // pixel difference threshold
+      if (
+        (window.outerWidth - window.innerWidth > threshold) ||
+        (window.outerHeight - window.innerHeight > threshold)
+      ) {
+        alert('Developer tools detected! The page will reload.');
+        location.reload();
+      }
+    }
+    // Check once on load
+    window.addEventListener('load', detectDevTools);
+    // Periodically re‑check (every 1 s)
+    setInterval(detectDevTools, 1000);
 
-        <div id="tab-concept" class="content-tab">
-            <div class="section-title" data-lang="title_concept">Concept Art of Characters</div>
-            <div class="grid-gallery">
-                <div class="placeholder-card" data-lang="card_wigy">Wigy sheet</div>
-                <div class="placeholder-card" data-lang="card_wigy_adv">Wigy advanced sheet</div>
-                <div class="placeholder-card" data-lang="card_atlas">Atlas</div>
-                <div class="placeholder-card" data-lang="card_atlas_adv">Atlas advanced sheet</div>
-            </div>
-        </div>
+    /* =========================
+       3️⃣  Optional UX tweaks
+       ========================= */
+    // Disable printing
+    window.addEventListener('beforeprint', function (e) {
+      e.preventDefault();
+    });
 
-        <div id="tab-socials" class="content-tab">
-            <div class="section-title" data-lang="title_socials">Links for my socials</div>
-            <div style="display: flex; gap: 20px; margin-top: 30px;">
-                <button class="nav-btn">Discord user= dionron</button>
-                <button class="nav-btn">Instagram</button>
-                <button class="nav-btn">Youtube</button>
-            </div>
-        </div>
+    // Disable copy (may interfere with legitimate copy‑paste)
+    document.addEventListener('copy', function (e) {
+      e.preventDefault();
+    });
 
-        <div id="tab-music" class="content-tab">
-            <div class="section-title" data-lang="title_music">Music</div>
-            <div class="placeholder-card" style="width: 100%; height: 150px; margin-top: 20px;">
-                <span data-lang="desc_music">[SoundCloud / Spotify I will put here soon...]</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="lang-container">
-        <div class="lang-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
-        <div class="lang-menu">
-            <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 English</button>
-            <button class="lang-btn" onclick="setLanguage('pt')">🇧🇷 Português (BR)</button>
-        </div>
-    </div>
-
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-    <script>
-        let visitorData = { country: "Unknown", flag: "❓", device: "Desktop", os: "Unknown OS" };
-
-        const player = new Plyr('#player', {
-            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-            quality: { default: 1080, options: [1080, 720, 480] }
-        });
-
-        async function getVisitorInfo() {
-            try {
-                const geoRes = await fetch('https://ipapi.co/json/');
-                const geoData = await geoRes.json();
-                visitorData.country = geoData.country_name || "Unknown";
-                visitorData.flag = geoData.country_code ? `:flag_${geoData.country_code.toLowerCase()}:` : "❓";
-                const ua = navigator.userAgent;
-                if (/tablet|ipad|playbook|silk/i.test(ua)) visitorData.device = "Tablet";
-                else if (/Mobile|Android|iP(hone|od)/i.test(ua)) visitorData.device = "Mobile";
-                if (ua.indexOf("Win") !== -1) visitorData.os = "Windows";
-                else if (ua.indexOf("Mac") !== -1) visitorData.os = "MacOS";
-                else if (ua.indexOf("Android") !== -1) visitorData.os = "Android";
-                else if (ua.indexOf("like Mac") !== -1) visitorData.os = "iOS";
-                else if (ua.indexOf("Linux") !== -1) visitorData.os = "Linux";
-            } catch (e) { console.log("Analytics limited."); }
-        }
-
-        async function sendToDiscord(title, description, color) {
-            const proxyURL = "/api/send-log";
-            fetch(proxyURL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    embeds: [{
-                        title: title,
-                        description: description,
-                        color: color,
-                        fields: [
-                            { name: "Location", value: `${visitorData.flag} ${visitorData.country}`, inline: true },
-                            { name: "Device", value: `📱 ${visitorData.device}`, inline: true },
-                            { name: "OS", value: `💻 ${visitorData.os}`, inline: true }
-                        ],
-                        timestamp: new Date().toISOString(),
-                        footer: { text: "Monitoring System" }
-                    }]
-                })
-            }).catch(e => console.log("Log stored."));
-        }
-
-        window.onload = async () => {
-            await getVisitorInfo();
-            sendToDiscord("🚀 Archives Accessed", "A new user is viewing the landing page.", 5191563);
-        };
-
-        function trackStudioClick() {
-            sendToDiscord("🚪 Studio Access Initialized", "The user clicked 'ENTER STUDIO'.", 3066993);
-        }
-
-        function switchTab(t){
-            document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-            const buttons=Array.from(document.querySelectorAll('.nav-btn'));
-            const targetBtn=buttons.find(b=>b.getAttribute('onclick').includes(t));
-            if(targetBtn)targetBtn.classList.add('active');
-            document.querySelectorAll('.content-tab').forEach(tab=>tab.classList.remove('active'));
-            const activeTab=document.getElementById('tab-'+t);
-            if(activeTab){
-                activeTab.classList.add('active');
-                activeTab.style.animation='none';
-                activeTab.offsetHeight;
-                activeTab.style.animation='fadeIn 0.5s ease';
-            }
-        }
-
-        const translations={
-            en:{nav_concept:"Concept Art",nav_socials:"Socials",nav_episodes:"Episodes",nav_models:"3D Models",nav_music:"Music",title_episodes:"Uhh have this video for now (go to 1:24 hehe)",desc_episodes:"Freddy fazbear dancing haha",title_concept:"Concept Art of Characters",card_wigy:"Wigy sheet",card_wigy_adv:"Wigy advanced sheet",card_atlas:"Atlas",card_atlas_adv:"Atlas advanced sheet",title_socials:"Links for my socials",title_models:"Interactive 3D Viewer",desc_models:"For now I only have A.P.I",btn_studio:"ENTER A.P.I STUDIO",title_music:"Music",desc_music:"[SoundCloud / Spotify I will put here soon...]"},
-            pt:{nav_concept:"Arte Conceitual",nav_socials:"Redes Sociais",nav_episodes:"Episódios",nav_models:"Modelos 3D",nav_music:"Música",title_episodes:"Uhh fica com esse vídeo por enquanto (vai pro 1:24 hehe)",desc_episodes:"Freddy fazbear dançando haha",title_concept:"Arte Conceitual dos Personagens",card_wigy:"Ficha do Wigy",card_wigy_adv:"Ficha avançada do Wigy",card_atlas:"Atlas",card_atlas_adv:"Ficha avançada do Atlas",title_socials:"Links das minhas redes",title_models:"Visualizador 3D Interativo",desc_models:"Por enquanto só tenho o A.P.I",btn_studio:"ENTRAR NO ESTÚDIO A.P.I",title_music:"Música",desc_music:"[Vou colocar SoundCloud / Spotify aqui em breve...]"}
-        };
-
-        function setLanguage(l){
-            document.querySelectorAll('[data-lang]').forEach(el=>{
-                const k=el.getAttribute('data-lang');
-                if(translations[l]&&translations[l][k])el.innerText=translations[l][k];
-            });
-        }
-    </script>
+    /* =========================
+       4️⃣  Existing log viewer code
+       ========================= */
+    const logContainer = document.getElementById('log-container');
+    const logs = [
+      { timestamp: '2024‑04‑26T12:34:56Z', level: 'INFO', message: 'Application started.' },
+      { timestamp: '2024‑04‑26T12:35:10Z', level: 'WARN', message: 'User “admin” logged in.' },
+      { timestamp: '2024‑04‑26T12:35:20Z', level: 'ERROR', message: 'Failed to connect to database.' },
+      { timestamp: '2024‑04‑26T12:36:00Z', level: 'DEBUG', message: 'Debug data: { … }' }
+    ];
+    function formatDate(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleString();
+    }
+    logs.forEach(entry => {
+      const div = document.createElement('div');
+      div.className = 'log-entry';
+      div.innerHTML = `<strong>[${entry.level}]</strong> ${formatDate(entry.timestamp)}: ${entry.message}`;
+      logContainer.appendChild(div);
+    });
+  </script>
 </body>
 </html>
